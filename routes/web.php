@@ -23,7 +23,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/find/{id}', 'FriendController@find');
+Route::get('/find/{name}', 'FriendController@find');
 Route::post('/friend', 'FriendController@addFriend');
 Route::get('/friend', 'HomeController@fetchAllFriends');
 Route::post('/chat/{id}', 'ChatController@startChat');
@@ -37,3 +37,8 @@ Route::post('/friendreq/{id}', 'FriendController@sendFriendRequest');
 Route::get('/notif', 'HomeController@fetchAllNotifications');
 Route::post('/updateprofile', 'HomeController@updateProfile');
 Route::delete('/deletechatroom', 'ChatController@deleteChatroom');
+Route::get('/chatVideo/createToken/{id}','chatVideo@create');
+Route::get('/chatVideo/{name}','chatVideo@index');
+Route::get('/send','chatVideo@store');
+
+

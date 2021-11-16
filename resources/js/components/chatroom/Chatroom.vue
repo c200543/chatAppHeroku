@@ -1,5 +1,28 @@
 <template>
-  <div class="container">
+  <div class="container ">
+     <div v-if="show && mess[0].receiveId==this.user.id " type="button" class="bg-primary bt">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-inbound-fill" viewBox="0 0 16 16">
+                                             <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM15.854.146a.5.5 0 0 1 0 .708L11.707 5H14.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 1 0v2.793L15.146.146a.5.5 0 0 1 .708 0z"/>
+                                         </svg>
+                                        <h5 class="d-inline-block">From:</h5> <br>
+                                        <h4 class="d-inline-block"> {{mess[0].user.name}} </h4>
+                                         <div class="profile friend-request-photo d-inline-block">
+                                             <img :src="`avatar/${mess[0].user.photo}`" alt="">
+                                        </div>
+                                        </div>
+                                        <div class="col-lg-6 d-block ">
+                                            <button type="button" class="btn btn-success ml-5 mt-2 ">Accept</button>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <button type="button" class="btn btn-danger ml-4 mt-2">Decline</button>
+                                        </div>
+                                </div>
+
+                            </div>
+     </div>
     <!-- ALERT -->
     <div class="alert-container position-absolute" style="top: 10px; right: 10px;">
       <div v-if="status.length > 0">
@@ -29,7 +52,7 @@
           </div>
           <div class="header-left-icon-right">
             <div class="position-relative">
-              <span 
+              <span
                 v-if="notifications.length > 0"
                 class="badge badge-danger position-absolute notification-badge">{{ notifications.length }}</span>
               <a id="notification-list" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b-icon icon="bell-fill" class="h5 my-0" variant="secondary"></b-icon></a>
@@ -68,7 +91,7 @@
             <div class="position-relative">
               <a class="dropdown-toggle" id="dropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b-icon icon="three-dots-vertical" class="h4 my-0" variant="secondary"></b-icon></a>
               <div id="recent-chat-option" class="dropdown-menu bg-dark recent-chat-option" aria-labelledby="dropdownBtn">
-                <a @click="deleteAllChats()" class="list-group-item bg-dark text-light text-decoration-none">Delete all chats</a>
+                <a @click="deleteAllChats()" class="list-group-item bg-dark text-light text-decoration-none d-inline-block">Delete all chats</a>
               </div>
             </div>
           </div>
@@ -80,12 +103,14 @@
           <!-- search bar -->
           <div class="search-bar">
             <input
-              @keyup="search()"
+
               v-model="query"
               type="text"
               class="form-control"
               :placeholder="placeholder">
           </div>
+
+
 
           <!-- 1st Tab - Recent chat -->
           <div id="recent-chat" v-if="tab === 'recent-chat'">
@@ -99,7 +124,7 @@
                 <div class="profile friends-photo">
                   <img :src="`avatar/${friend.friend.photo}`" alt="">
                 </div>
-                
+
                 <div class="friends-credent">
                   <!-- name -->
                   <span class="friends-name">{{ friend.friend.name }}</span>
@@ -121,7 +146,7 @@
                 <div class="profile friends-photo">
                   <img :src="`avatar/${friend.friend.photo}`" alt="">
                 </div>
-                
+
                 <div class="friends-credent">
                   <!-- name -->
                   <span class="friends-name">{{ friend.friend.name }}</span>
@@ -181,14 +206,14 @@
 
           <!-- 3rd tab - Add a friend -->
           <div v-if="tab === 'add-friend'">
-            <div id="add-friend" class="add-friend" v-if="search_result && search_result.status">
+            <div id="add-friendaaaa" class="add-friend" v-if="search_result && search_result.status">
               <!-- photo -->
               <div class="profile friend-list-photo">
                 <img :src="`avatar/${search_result.user.photo}`" alt="">
               </div>
 
               <h6 class="text-light m-0">{{ search_result.user.name }}</h6>
-              <b-icon @click="sendFriendRequest(search_result.user.id)" icon="person-plus" id="add-friend-btn" class="h5 my-0" variant="light"></b-icon>
+                <b-icon @click="sendFriendRequest(search_result.user.id)" icon="person-plus" id="add-friend-btn" class="h5 my-0" variant="light"></b-icon>
             </div>
 
             <div v-if="search_result && !search_result.status">
@@ -210,7 +235,7 @@
             <a id="toggleSettingOpt" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b-icon style="width: 1.75rem; height: 1.75rem;" icon="gear-fill" class="h1 gear my-0" variant="secondary"></b-icon></a>
             <div class="dropdown-menu bg-dark" aria-labelledby="toggleSettingOpt">
               <a class="list-group-item bg-dark text-light text-decoration-none" data-toggle="modal" data-whatever="@mdo" data-target="#editProfile">Edit Profile</a>
-              <a 
+              <a
                 href="/logout"
                 class="list-group-item bg-dark text-light text-decoration-none"
                 onclick="event.preventDefault();
@@ -224,7 +249,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                  <h4 class="modal-title" id="exampleModalLabel">Edit Profile</h4>
                   <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -232,10 +257,24 @@
                 <form @submit.prevent="updateProfile()" action="" method="POST" enctype="multipart/form-data" id="form-modal">
                 <div class="modal-body">
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Your name</label>
+                    <label class="d-inline-block" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+  <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+  <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+</svg>
+    Your id: {{user.id}}</label></br>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+</svg>
+                    <label for="recipient-name" class="col-form-label mb-2">
+                    Your name:</label>
                       <input type="text" class="form-control" name="user_name" id="user_name" :value="user.name">
                     </div>
                     <div class="form-group">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+                            <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
+                      </svg>
                       <label for="message-text" class="col-form-label">Your Profile Picture</label>
                       <input type="hidden" name="old_photo" :value="user.photo">
                       <input type="file" name="new_photo" class="d-block" id="new_user_photo">
@@ -251,10 +290,6 @@
           </div>
         </div>
       </section>
-      
-      
-
-
       <!-- RIGHT SECTION -->
 
       <section id="main-right" class="main-right">
@@ -270,7 +305,7 @@
 
           <!-- some btn -->
           <div class="some-btn" v-if="chatroom_data">
-            <b-icon icon="camera-video-fill" class="h5 text-disabled" variant="dark" title="Not available."></b-icon>
+            <b-icon icon="camera-video-fill" @click="chatVideo()" variant="dark" title="Chat Video"></b-icon>
             <b-icon icon="telephone-fill" class="h5 text-disabled" variant="dark" title="Not available."></b-icon>
             <div class="position-relative dropleft">
               <a class="dropdown-toggle" id="toggleChatBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b-icon icon="three-dots-vertical" class="h4 my-0" variant="dark"></b-icon></a>
@@ -286,6 +321,7 @@
         <div v-if="!chatroom_data">
           <div class="jumbotron text-center" style="height: 100%;">
             <h1 class="text-secondary">Start a new chat</h1>
+            <button @click="openTab('add-friend')" title="Add a friend" class="btn btn-success">Add your friend by name</button>
           </div>
         </div>
 
@@ -305,7 +341,7 @@
               </div>
             </div>
 
-            
+
             <!-- YOUR CHAT TEMPLATE -->
             <div class="your-chat" v-if="chat.sender.id == user.id">
               <p class="your-chat-balloon text-break">{{ chat.message }}</p>
@@ -318,7 +354,7 @@
         <!-- typing area -->
         <div id="typing-area" class="typing-area">
           <!-- input form -->
-          <textarea
+        <!--   <textarea
             id="type-area"
             class="type-area"
             rows="1"
@@ -326,17 +362,17 @@
             @keyup="sendMessage()"
             v-if="chatroom_data"
             placeholder="Type something...">
-          </textarea>
-          
+          </textarea> -->
+           <textarea-emoji-picker id="type-area" rows="1"    v-if="chatroom_data"
+            class="type-area" v-model="message"/>
+
           <!-- send btn -->
-          <b-icon @click="sendMessage()" icon="reply-fill" class="h1 send-btn" variant="primary" v-if="chatroom_data"></b-icon>
+
         </div>
       </section>
     </div>
 
-    <div id="creator" class="creator">
-      <p>&copy; {{ new Date().getFullYear() }} | Created by <a href="https://github.com/iqbaltaufiq" class="text-secondary font-weight-bold text-decoration-none">Iqbal Taufiq</a> </p>
-    </div>
+
   </div>
 </template>
 
@@ -344,6 +380,8 @@
 export default {
   data () {
     return {
+      show:false,
+      mess:[],
       user: this.userprop,
       tab: 'recent-chat',
       message: '',
@@ -356,18 +394,30 @@ export default {
       query_friend_list: [],
       notifications: [],
       chatroom_data: null,
-      status: []
+      status: [],
     }
   },
   props: {
     userprop: Object
+  },
+  watch: {
+      query: function(newVal, oldVal) {
+               if(this.query!=null) {
+                 if(this.query!='') {
+                    this.search();
+            }
+
+          }
+
+
+      }
   },
   methods: {
     runThisUserEchoListener () {
       Echo.private(`user.${this.user.id}`)
       .listen('ReceiveMessage', (e) => {
 
-        // cek apakah ada di recent chats
+
         const isExist = this.recent_chats.filter(recent => recent.friend.id == e.payload.user.id);
 
         if (!isExist.length) {
@@ -379,14 +429,13 @@ export default {
         } else {
           // put this user into the top in recent chat list
           this.addToFirstIndexInRecentChats(e.payload.user, e.payload.message);
-  
+
           // increment the unread property value for the badge
           this.incrementUnreadMessages(e.payload.user.id);
         }
 
 
-        console.log('Ini dari private channel');
-        console.log(e);
+
       })
       .listen('SendNotification', (e) => {
         if (e.payload.notification.type == 'friend-request') {
@@ -430,7 +479,7 @@ export default {
       }
 
       if (tab == 'add-friend') {
-        this.placeholder = 'Press enter to search...';
+        this.placeholder = 'Press enter to id...';
         // reset the query data for other tabs
         leftHeaderButton[2].classList.replace('text-secondary', 'text-light');
         this.query_recent_chats = [];
@@ -453,26 +502,21 @@ export default {
           });
           break;
         case 'add-friend':
-          if (event.key == 'Enter') {
-            // chech wheter if the input has any non-digit value (Not A Number)
-            const hasNaN = this.query.match(/[^0-9]/);
-            if (hasNaN) {
-              this.setAlert('User ID does not support non-digit character.');
-              return false;
+            if(this.query!=null) {
+              this.findUser(this.query);
+              console.log(this.query)
             }
 
-            if (this.query && !hasNaN) {
-              this.findUser(this.query);
-            }
-          }
+
           break;
         default:
           console.log('Search error.');
       }
     },
-    findUser (id) {
-      axios.get(`/find/${id}`)
+    findUser () {
+      axios.get(`/find/`+this.query)
       .then((res) => {
+          console.log(res)
         this.search_result = res.data;
       }).catch((err) => {
         console.log(err);
@@ -565,7 +609,7 @@ export default {
             friend: res.data.user,
             unread: 0
           });
-        } 
+        }
         console.log(res);
 
         Echo.join(`chat.${res.data.room_id}`)
@@ -604,25 +648,21 @@ export default {
         console.log(err);
       });
     },
+
     sendMessage () {
 
-      if (!event.shiftKey && event.key == 'Enter') {
-        // UNTUK SEMENTARA
-        if (this.message == '' || this.message == null) {
-          alert('Pesan tidak boleh kosong!!');
-          return false;
-        }
-  
+
+
         this.chatroom_data.messages.push({
           sender: this.user,
           message: this.message,
           time: new Date().toISOString()
         });
-  
+
         this.addToFirstIndexInRecentChats(this.chatroom_data.user, this.message);
-  
+
         console.log(this.recent_chats);
-  
+
         axios.post('/send', {
           message: this.message,
           room_id: this.chatroom_data.room_id
@@ -630,14 +670,14 @@ export default {
         .then((res) => {
           console.log(res);
         }).catch((err) => {
-          console.log(err);        
+          console.log(err);
         });
-  
+
         this.message = '';
-      }
+
     },
     addToFirstIndexInRecentChats (sender, message) {
-      
+
       this.recent_chats.map(recent => {
         if (recent.friend.id == sender.id) {
           recent.chat.message = message;
@@ -727,7 +767,7 @@ export default {
         Echo.leave(`chat.${this.chatroom_data.room_id}`);
         this.chatroom_data = null;
       }
-      
+
       axios.post('/clearall', {
         csrf_token: document.querySelector("meta[name='csrf-token']").getAttribute('content')
       })
@@ -800,23 +840,62 @@ export default {
 
       const timeformat = `${days[timestamp.getDay()]}, ${months[timestamp.getMonth()]} ${addZeroOffset(timestamp.getDate())} | ${addZeroOffset(timestamp.getHours())}:${addZeroOffset(timestamp.getMinutes())}`;
       return timeformat;
+    },
+     chatVideo() {
+    function generate_token(length){
+        //edit the token allowed characters
+        var a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
+        var b = [];
+        for (var i=0; i<length; i++) {
+            var j = (Math.random() * (a.length-1)).toFixed(0);
+            b[i] = a[j];
     }
+        return b.join("");
+    }
+    const token=generate_token(32);
+    console.log(token);
+    const URL="/chatVideo/createToken/" +this.chatroom_data.user.id
+      window.open(URL,'_blank',"toolbar=yes,scrollbars=yes,resizable=yes,left=800,width=800,height=800");
+  }
   },
   mounted () {
+        Echo.private('call')
+            .listen('callVideoEvent', (e) => {
+                console.log(e);
+                this.show=true;
+                this.mess.push({
+                message: e.message,
+                user:  e.user,
+                receiveId: e.id
+                });
+            });
     this.fetchAllFriends();
     this.fetchAllRecentChats();
     this.fetchAllNotifications();
     this.runThisUserEchoListener();
+
   },
   updated () {
     if (this.chatroom_data != null) {
       this.scrollChat();
     }
-  }
+  },
+
 }
 </script>
 
 <style scoped>
+.bt {
+    top:40%;
+    left: 40%;
+    width:400px;
+    height:200px;
+    position:fixed;
+    display:block;
+    border-radius: 7%;
+    border: none;
+
+}
 .b-icon {
   cursor: pointer;
 }

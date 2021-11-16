@@ -27,8 +27,8 @@ class FriendController extends Controller
 
 
     public function find (Request $request) {
-        
-        $data = User::where('id', $request->id)->first(['id', 'name', 'email', 'photo']);
+
+        $data = User::where('name', 'LIKE', '%'.$request->name .'%')->first(['id', 'name', 'email', 'photo']);
 
         if ($data) {
             return [
@@ -46,7 +46,7 @@ class FriendController extends Controller
         if (Auth::user()->id == $request->id) {
             return;
         }
-        
+
         // check whether if they already have become friend or not
         $areTheyFriend = Friendlist::whereIn('first_user', [Auth::user()->id, $request->id])
                                     ->whereIn('second_user', [Auth::user()->id, $request->id])
@@ -58,7 +58,7 @@ class FriendController extends Controller
                                     ->where('type', 'friend-request')
                                     ->where('read_at', null)
                                     ->exists();
-                                    
+
         /**
          * A friend request can only be sent when they are not friends
          * AND there is no unresponded friend request towards the targeted user.
@@ -80,7 +80,7 @@ class FriendController extends Controller
             ]));
 
             $user = User::find($request->id);
-    
+
             return [
                 'sender' => Auth::user()->id,
                 'receiver' => $user,
@@ -94,7 +94,7 @@ class FriendController extends Controller
         }
     }
 
-    
+
     public function addFriend (Request $request) {
 
         if (Auth::user()->id == $request->target_id) {
@@ -109,13 +109,13 @@ class FriendController extends Controller
                                     ->count();
 
             if ($areTheyFriend == 0) {
-                
+
                 // save their friendship record in the DB
                 Friendlist::create([
                     'first_user' => Auth::user()->id,
                     'second_user' => $request->target_id
                 ]);
-    
+
                 /**
                  * update the friend request's state from unresponded to responded
                  * by giving a datetime value to the 'read_at' column.
@@ -123,7 +123,7 @@ class FriendController extends Controller
                 FriendRequest::where('id', $request->notification_id)
                             ->update([ 'read_at' => now() ]);
 
-                
+
                 // save notification message into DB
                 $makeNotif = FriendRequest::create([
                     'sender_id' => Auth::user()->id,
@@ -137,9 +137,9 @@ class FriendController extends Controller
                     'sender' => Auth::user(),
                     'notification' => $makeNotif
                 ]));
-    
+
                 $data = User::find($request->target_id);
-    
+
                 return $data;
             } else {
 
@@ -155,7 +155,7 @@ class FriendController extends Controller
         }
     }
 
-    
+
     public function unfriend (Request $request) {
 
         if (Auth::check() && $request->csrf_token == csrf_token()) {
@@ -168,13 +168,13 @@ class FriendController extends Controller
                 // delete all chats from both sides (if any)
                 Chat::where('room_id', $room_id['room_id'])->delete();
             }
-            
+
             if ($room_id) {
-                
+
                 // delete the specific chatroom (if present)
                 PersonalChatroom::where('id', $room_id['id'])->delete();
             }
-            
+
             // delete relationship from friendlist table
             Friendlist::whereIn('first_user', [Auth::user()->id, $request->target])
                         ->whereIn('second_user', [Auth::user()->id, $request->target])
@@ -184,7 +184,7 @@ class FriendController extends Controller
             $user = User::find($request->target);
 
             return ['status' => 'You are no longer friend with ' . $user->name . '.'];
-            
+
         } else {
             return [
                 'error' => 1,

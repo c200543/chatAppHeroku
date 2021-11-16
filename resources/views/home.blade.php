@@ -2,4 +2,5 @@
 
 @section('content')
 <chatroom-component :userprop="{{ Auth::user() }}"></chatroom-component>
+
 @endsection

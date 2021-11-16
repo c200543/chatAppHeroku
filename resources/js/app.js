@@ -12,7 +12,17 @@ import { IconsPlugin } from 'bootstrap-vue';
 
 import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
 
+import $ from 'jquery';
+
+Vue.prototype.$ = $;
+
+
+import 'jquery-ui/ui/widgets/datepicker.js';
 Vue.use(IconsPlugin);
+
+import ElementUI from 'element-ui';
+Vue.use(ElementUI);
+import 'element-ui/lib/theme-chalk/index.css';
 
 /**
  * The following block of code may be used to automatically register your
@@ -27,6 +37,8 @@ Vue.use(IconsPlugin);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('chatroom-component', require('./components/chatroom/Chatroom.vue').default);
+Vue.component('textarea-emoji-picker', require('./components/TextareaEmojiPicker').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -37,3 +49,4 @@ Vue.component('chatroom-component', require('./components/chatroom/Chatroom.vue'
 const app = new Vue({
     el: '#app',
 });
+app.$mount('#app')

@@ -2,7 +2,7 @@
 
 use App\User;
 use Illuminate\Support\Facades\Broadcast;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -25,3 +25,6 @@ Broadcast::channel('user.{id}', function (User $user, $id) {
 Broadcast::channel('chat.{roomId}', function (User $user) {
     return $user;
 });
+Broadcast::channel('call', function (User $user) {
+    return $user;
+  });
