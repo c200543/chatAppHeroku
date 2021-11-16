@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div class="agora-title-box">
-        {{ this.data }}  <br>  messages: {{ messages }}
+
       <div class="agora-title">Agora Basic Video Call</div>
     </div>
     <div class='agora-box'>
@@ -42,16 +42,21 @@ import { log } from '../utils/utils'
 export default {
   components: {
     StreamPlayer
-  },
+  }, props: ['usertest','arr'],
   data () {
     return {
       messages:[],
       data:'',
+      appIdReceive:this.arr[0],
+      appTokenReceive:this.arr[1],
+      appChannelReceive:this.arr[2],
+      userTest:this.usertest,
       option: {
         appid: '',
         token: '',
         uid: null,
         channel: '',
+
       },
 
       disableJoin: false,
@@ -59,15 +64,33 @@ export default {
       remoteStreams: [],
     }
   },
-  props: {
-    msg: String,
 
-  },
    created() {
 
       },
 
   mounted() {
+      if( this.userTest!=123) {
+                    axios.get("/chatVideo/createToken") .then((res) => {
+                    this.data=res.data;
+                    console.log( this.data)
+                })
+                this.option.appid=this.data.project.id;
+                this.option.token=this.data.project.vendor_key;
+                this.option.channel=this.data.project.name;
+                setTimeout(() => {
+                    $('#Join').click();
+                }, 30000);
+      }
+      else {
+                this.option.appid= this.appIdReceive;
+                this.option.token=this.appTokenReceive;
+                this.option.channel=this.appChannelReceive;
+                 setTimeout(() => {
+                    $('#Join').click();
+                }, 30000);
+
+      }
        /*   Echo.private('call')
             .listen('callVideoEvent', (e) => {
                 console.log(e)
@@ -76,47 +99,9 @@ export default {
                 user: e.user
                 });
             }); */
- axios.get("/chatVideo/createToken") .then((res) => {
-           this.data=res.data;
-           console.log( this.data)
-       })
- axios.get("/send") .then((res) => {
-         console.log(res);
-       })
 
 
 
-  /*   this.option.appid=this.data.project.id;
-      this.option.token=this.data.project.vendor_key;
-      this.option.channel=this.data.project.name; */
-      setTimeout(() => {
-          $('#Join').click();
-      }, 30000);
-
-/*       window.onload = function() {
-    (function()
-{
-    setTimeout( function() {
-        if( window.localStorage )
-  {
-    if( !localStorage.getItem('firstLoad') )
-    {
-      localStorage['firstLoad'] = true;
-      window.location.reload();
-    }
-    else {
-      localStorage.removeItem('firstLoad');
-          $('#Join').click();
-    }
-
-
-  }
-
-    },30000)
-
-})();
-
-} */
   },
 
   methods: {

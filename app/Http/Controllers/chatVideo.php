@@ -24,34 +24,6 @@ class chatVideo extends Controller
         //
 
 
-      /*   $curl = curl_init();
-        $sing = true;
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.agora.io/dev/v1/project',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array('name' => 'chat 8'), array("enable_sign_key"=>$sing),
-        CURLOPT_HTTPHEADER => array(
-            'Accept: application/json',
-            'Authorization: Basic ZTUwMDhkMjc2OGE0NDFmMGIwMzQzMjA2M2VkYzg3MTU6MTIyMmQ0M2QxNjE0NDkxYjljNzhmYjlhZjUxYWU4YjI='
-        ),
-        ));
-        $user = Auth::user();
-        broadcast(new callVideoEvent($user))->toOthers();
-        $response = curl_exec($curl);
-        curl_close($curl);
-
-
-
-        return view("chatVideo")->with("data",$response)
-                                ->with("user",Auth::user()->name);
-;
-        ; */
         return view("chatVideo");
     }
 
@@ -80,51 +52,10 @@ class chatVideo extends Controller
         ),
         ));
         $user = Auth::user();
-        broadcast(new callVideoEvent($user,$id))->toOthers();
         $response = curl_exec($curl);
         curl_close($curl);
+        broadcast(new callVideoEvent($user,$id,$response))->toOthers();
         return $response;
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -136,6 +67,13 @@ class chatVideo extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function receive($appId,$token,$channel) {
+        return view('receive')  ->with("appId",$appId)
+                                ->with("appToken",$token)
+                                ->with("appChannel",$channel)
+                                        ;
+
     }
 
 }

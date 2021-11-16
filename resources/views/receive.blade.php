@@ -11,9 +11,8 @@
 </head>
 <body>
     <div id="app">
-        <example-component  v-bind:arr=[0,1,2]   />
+
+        <example-component  v-bind:usertest="123" v-bind:arr=["{{ $appId }}","{{ $appToken }}","{{ $appChannel }}"] />
     </div>
-
-
 </body>
 </html>

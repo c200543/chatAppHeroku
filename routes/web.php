@@ -39,6 +39,7 @@ Route::post('/updateprofile', 'HomeController@updateProfile');
 Route::delete('/deletechatroom', 'ChatController@deleteChatroom');
 Route::get('/chatVideo/createToken/{id}','chatVideo@create');
 Route::get('/chatVideo/{name}','chatVideo@index');
-Route::get('/send','chatVideo@store');
+Route::get('/chatVideo/{appId}/{token}/{channel}','chatVideo@receive');
+
 
 

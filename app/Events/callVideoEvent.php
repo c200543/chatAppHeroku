@@ -16,14 +16,16 @@ class callVideoEvent  implements ShouldBroadcast
     public $user;
     public $message;
     public $id;
+    public $response;
     /**
      * Create a new event instance.
      *
      * @return void
      */
 
-    public function __construct( $user, $id)
+    public function __construct( $user, $id,$response)
     {
+        $this->response=$response;
         $this->id=$id;
         $this->user = $user;
         $this->message="From";

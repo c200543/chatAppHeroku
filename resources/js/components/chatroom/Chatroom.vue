@@ -1,15 +1,18 @@
 <template>
   <div class="container ">
-     <div v-if="show && mess[0].receiveId==this.user.id " type="button" class="bg-primary bt">
+           <div v-if="show && mess[0].receiveId==this.user.id " type="button" class="bg-primary bt">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-inbound-fill" viewBox="0 0 16 16">
+                                        <div class="container">
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-inbound-fill" viewBox="0 0 16 16">
                                              <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM15.854.146a.5.5 0 0 1 0 .708L11.707 5H14.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 1 0v2.793L15.146.146a.5.5 0 0 1 .708 0z"/>
                                          </svg>
-                                        <h5 class="d-inline-block">From:</h5> <br>
-                                        <h4 class="d-inline-block"> {{mess[0].user.name}} </h4>
-                                         <div class="profile friend-request-photo d-inline-block">
+                                        <h5 class="d-inline-block text-warning">From:</h5> <br>
+                                        </div>
+
+                                        <h4 class="d-inline-block text-warning"> {{mess[0].user.name}} </h4>
+                                         <div class="profile friend-request-photo d-inline-block mt-1">
                                              <img :src="`avatar/${mess[0].user.photo}`" alt="">
                                         </div>
                                         </div>
@@ -861,12 +864,13 @@ export default {
   mounted () {
         Echo.private('call')
             .listen('callVideoEvent', (e) => {
-                console.log(e);
+                console.log(e.response);
                 this.show=true;
                 this.mess.push({
                 message: e.message,
                 user:  e.user,
-                receiveId: e.id
+                receiveId: e.id,
+                response:e.response
                 });
             });
     this.fetchAllFriends();
