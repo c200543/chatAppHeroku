@@ -13,7 +13,7 @@
 
                                         <h4 class="d-inline-block text-warning"> {{mess[0].user.name}} </h4>
                                          <div class="profile friend-request-photo d-inline-block mt-1">
-                                             <img :src="`avatar/${mess[0].user.photo}`" alt="">
+                                             <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
                                         </div>
                                         </div>
                                         <div class="col-lg-6 d-block ">
@@ -70,7 +70,7 @@
                       <h6 class="text-secondary">Friend request</h6>
                       <div class="friend-request">
                         <div class="profile friend-request-photo">
-                          <img :src="`avatar/${notification.sender.photo}`" alt="">
+                          <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
                         </div>
                         <span class="text-light">{{ notification.sender.name }}</span>
                         <a @click="addFriend(notification.sender.id, notification.notif.id, true)" class="badge badge-success">Accept</a>
@@ -125,7 +125,7 @@
                 @click="startChat(friend.friend.id)">
                 <!-- photo -->
                 <div class="profile friends-photo">
-                  <img :src="`avatar/${friend.friend.photo}`" alt="">
+                  <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
                 </div>
 
                 <div class="friends-credent">
@@ -147,7 +147,7 @@
                 @click="startChat(friend.friend.id)">
                 <!-- photo -->
                 <div class="profile friends-photo">
-                  <img :src="`avatar/${friend.friend.photo}`" alt="">
+                  <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
                 </div>
 
                 <div class="friends-credent">
@@ -171,7 +171,7 @@
                 :key="index">
                 <!-- photo -->
                 <div class="profile friend-list-photo">
-                  <img :src="`avatar/${friend.photo}`" alt="">
+                 <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
                 </div>
 
                 <h6 class="text-light m-0">{{ friend.name }}</h6>
@@ -192,7 +192,7 @@
                 :key="index">
                 <!-- photo -->
                 <div class="profile friend-list-photo">
-                  <img :src="`avatar/${friend.photo}`" alt="">
+                  <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
                 </div>
 
                 <h6 class="text-light m-0">{{ friend.name }}</h6>
@@ -212,7 +212,7 @@
             <div id="add-friendaaaa" class="add-friend" v-if="search_result && search_result.status">
               <!-- photo -->
               <div class="profile friend-list-photo">
-                <img :src="`avatar/${search_result.user.photo}`" alt="">
+                <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
               </div>
 
               <h6 class="text-light m-0">{{ search_result.user.name }}</h6>
@@ -229,7 +229,7 @@
         <div id="self-info" class="self-info">
           <!-- photo -->
           <div class="profile your-photo">
-            <img :src="`avatar/${user.photo}`" alt="">
+            <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
           </div>
           <!-- name -->
           <h4 class="name your-name my-0">{{ user.name }}</h4>
@@ -300,7 +300,7 @@
         <div id="header-right" class="header-right">
           <!-- profile pict -->
           <div id="header-img" class="profile header-img" v-if="chatroom_data">
-            <img :src="`avatar/${chatroom_data.user.photo}`" alt="">
+            <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
           </div>
 
           <!-- name -->
@@ -335,7 +335,7 @@
             <!-- FRIENDS CHAT TEMPLATE -->
             <div class="friends-chat" v-if="chat.sender.id != user.id">
               <div class="profile friends-chat-photo">
-                <img :src="`avatar/${chat.sender.photo}`" alt="">
+                <img src="/images/vendor/jquery-ui/themes/base/default.png" alt="">
               </div>
               <div class="friends-chat-content">
                 <p class="friends-chat-name">{{ chat.sender.name }}</p>
