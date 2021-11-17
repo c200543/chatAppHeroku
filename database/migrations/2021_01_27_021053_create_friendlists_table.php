@@ -15,8 +15,8 @@ class CreateFriendlistsTable extends Migration
     {
         Schema::create('friendlists', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('first_user');
-            $table->unsignedBigInteger('second_user');
+            $table->integer('first_user');
+            $table->integer('second_user');
             $table->timestamps();
         });
     }

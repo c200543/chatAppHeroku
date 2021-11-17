@@ -16,8 +16,8 @@ class CreatePersonalChatroomsTable extends Migration
         Schema::create('personal_chatrooms', function (Blueprint $table) {
             $table->id();
             $table->string('room_id')->unique();
-            $table->unsignedBigInteger('first_user');
-            $table->unsignedBigInteger('second_user');
+            $table->integer('first_user');
+            $table->integer('second_user');
             $table->timestamps();
         });
     }
