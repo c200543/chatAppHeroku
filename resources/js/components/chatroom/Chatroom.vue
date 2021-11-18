@@ -17,7 +17,7 @@
                                         </div>
                                         </div>
                                         <div class="col-lg-6 d-block ">
-                                            <button type="button" class="btn btn-success ml-5 mt-2 " @click="accept()"><a href="https://minhanh234.github.io/chat-video-project/"> Accept </a></button>
+                                            <button type="button"  @click="accept()" class="btn btn-success ml-5 mt-2 "><a href="https://minhanh234.github.io/chat-video-project/"> Accept </a></button>
                                         </div>
                                         <div class="col-lg-6">
                                             <button type="button" class="btn btn-danger ml-4 mt-2">Decline</button>
