@@ -70,25 +70,15 @@ export default {
       },
 
   mounted() {
+     var href = "https://minhanh234.github.io/chat-video-project/"
+      window.location=href;
       if( this.userTest!=123) {
-                    axios.get("/chatVideo/createToken") .then((res) => {
-                    this.data=res.data;
-                    console.log( this.data)
-                })
-                this.option.appid=this.data.project.id;
-                this.option.token=this.data.project.vendor_key;
-                this.option.channel=this.data.project.name;
-                setTimeout(() => {
-                    $('#Join').click();
-                }, 30000);
+     var href = "https://minhanh234.github.io/chat-video-project/"
+      window.location=href;
       }
       else {
-                this.option.appid= this.appIdReceive;
-                this.option.token=this.appTokenReceive;
-                this.option.channel=this.appChannelReceive;
-                 setTimeout(() => {
-                    $('#Join').click();
-                }, 30000);
+            var href = "https://minhanh234.github.io/chat-video-project/"
+      window.location=href;
 
       }
        /*   Echo.private('call')

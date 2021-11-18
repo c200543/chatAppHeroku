@@ -17,7 +17,7 @@
                                         </div>
                                         </div>
                                         <div class="col-lg-6 d-block ">
-                                            <button type="button" class="btn btn-success ml-5 mt-2 ">Accept</button>
+                                            <button type="button" class="btn btn-success ml-5 mt-2 " @click="accept()">Accept</button>
                                         </div>
                                         <div class="col-lg-6">
                                             <button type="button" class="btn btn-danger ml-4 mt-2">Decline</button>
@@ -416,6 +416,10 @@ export default {
       }
   },
   methods: {
+    accept () {
+      var href = "https://minhanh234.github.io/chat-video-project/"
+      window.location=href;
+    },
     runThisUserEchoListener () {
       Echo.private(`user.${this.user.id}`)
       .listen('ReceiveMessage', (e) => {
@@ -857,8 +861,9 @@ export default {
     }
     const token=generate_token(32);
     console.log(token);
-    const URL="/chatVideo/createToken/" +this.chatroom_data.user.id
-      window.open(URL,'_blank',"toolbar=yes,scrollbars=yes,resizable=yes,left=800,width=800,height=800");
+    var href = "/chatVideo/createToken/" +this.chatroom_data.user.id;
+    window.location=href;
+    
   }
   },
   mounted () {

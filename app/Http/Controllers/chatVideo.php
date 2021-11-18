@@ -24,7 +24,7 @@ class chatVideo extends Controller
         //
 
 
-        return view("chatVideo");
+
     }
 
     /**
@@ -55,7 +55,7 @@ class chatVideo extends Controller
         $response = curl_exec($curl);
         curl_close($curl);
         broadcast(new callVideoEvent($user,$id,$response))->toOthers();
-        return $response;
+        return view("chatVideo");
     }
 
     /**
